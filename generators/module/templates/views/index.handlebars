@@ -1,0 +1,30 @@
+{{#section 'css'}}
+    <!-- build:css /styles/<%= name %>.css -->
+    <link rel="stylesheet" href="/styles/<%= name %>.css"/>
+    <!-- endbuild -->
+{{/section}}
+{{#section 'js'}}
+    <!-- build:js /styles/<%= name %>.js -->
+    <script src="/scripts/<%= name %>.js" defer></script>
+    <!-- endbuild -->
+{{/section}}
+
+<main role="main" class="content">
+    <section role="region" class="section">
+        <div class="container">
+            <header class="section__header">
+                <h2 class="title">This is a header</a></h2>
+            </header>
+            <div class="section__body">
+                <div class="layout layout--basic">
+                    <div class="module module--secondary">
+                        This is some secondary content
+                    </div>
+                    <div class="module module--primary">
+                        This is the primary content
+                    </div>
+                </div>
+            </div>
+        </div>    
+    </section>
+</main>
