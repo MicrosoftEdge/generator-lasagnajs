@@ -1,6 +1,6 @@
 'use strict';
-var chalk = require('chalk');
 var yeoman = require('yeoman-generator');
+var chalk = require('chalk');
 var yosay = require('yosay');
 
 module.exports = yeoman.generators.NamedBase.extend({
@@ -9,7 +9,7 @@ module.exports = yeoman.generators.NamedBase.extend({
 
 		// Have Yeoman greet the user.
 		this.log(yosay(
-			'Welcome to the ' + chalk.red('CalimeroJS') + ' generator for services!'
+			'Welcome to the ' + chalk.red('LasagnaJS') + ' generator for services!'
 			));
 
 		var prompts = [{
