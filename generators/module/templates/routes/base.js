@@ -1,6 +1,7 @@
 'use strict';
-
-var baseRoutes = function (configurator, _, logger) {
+<% if(service) {%>
+var baseRoutes = function (configurator, _, logger, <%= serviceName %>) {<% } else {%>
+var baseRoutes = function (configurator, _, logger) {<% } %>
 	return function (router) {
 		logger.log('<%= name %> public routes set');
 		var renderHomePage = function(req, res){

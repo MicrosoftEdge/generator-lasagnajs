@@ -2,6 +2,7 @@
 var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var yosay = require('yosay');
+var path = require('path');
 
 module.exports = yeoman.generators.NamedBase.extend({
 	prompting: function () {
@@ -10,14 +11,23 @@ module.exports = yeoman.generators.NamedBase.extend({
 		// Have Yeoman greet the user.
 		this.log(yosay(
 			'Welcome to the ' + chalk.red('LasagnaJS') + ' generator for modules!'
-			));
+		));
 
-		var prompts = [{
+		var prompts = [];
+		if(!this.name){
+			prompts.push({
+				type: 'string',
+				name: 'name',
+				message: 'What will be the name of the module?'
+			});
+		}
+
+		prompts.push({
 			type: 'confirm',
-			name: 'async',
-			message: 'Would you like to make your module async?',
+			name: 'service',
+			message: 'Does your module need a service?',
 			default: true
-		}];
+		});
 
 		this.prompt(prompts, function (props) {
 			this.props = props;
@@ -28,12 +38,13 @@ module.exports = yeoman.generators.NamedBase.extend({
 	},
 	writing: function () {
 		console.log(this.name);
-		var name = this.name;
-		var async = this.props.async;
+		var name = this.name || this.props.name;
+		var service = this.props.service;
 
 		var context = {
 			name: name,
-			async: async
+			service: service,
+			serviceName: name + 'svc'
 		};
 
 		var destination = 'modules/' + name + '/';
@@ -60,6 +71,17 @@ module.exports = yeoman.generators.NamedBase.extend({
 				this.templatePath(filesToRename[i]),
 				this.destinationPath((destination + filesToRename[i]).replace('index', name)),
 				context);
+		}
+
+		if (context.service) {
+			this.composeWith('lasagnajs:service', {args: [name + 'svc'], options: {name: name + 'svc', async: true}});
+			//var route = path.resolve(__dirname, '../service/index.js');
+			//console.log(route);
+			//var serviceGenerator = require(route);
+			//serviceGenerator.writing.call({
+			//	name: name + 'svc',
+			//	prop: {async: true}
+			//});
 		}
 	}
 });

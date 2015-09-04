@@ -10,14 +10,23 @@ module.exports = yeoman.generators.NamedBase.extend({
 		// Have Yeoman greet the user.
 		this.log(yosay(
 			'Welcome to the ' + chalk.red('LasagnaJS') + ' generator for services!'
-			));
+		));
 
-		var prompts = [{
+		var prompts = [];
+		if (!this.name) {
+			prompts.push({
+				type: 'string',
+				name: 'name',
+				message: 'What will be the name of the service?'
+			});
+		}
+
+		prompts.push({
 			type: 'confirm',
 			name: 'async',
 			message: 'Would you like to make your service async?',
 			default: true
-		}];
+		});
 
 		this.prompt(prompts, function (props) {
 			this.props = props;
