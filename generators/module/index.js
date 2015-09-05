@@ -14,7 +14,7 @@ module.exports = yeoman.generators.NamedBase.extend({
 		));
 
 		var prompts = [];
-		if(!this.name){
+		if (!this.name) {
 			prompts.push({
 				type: 'string',
 				name: 'name',
@@ -31,20 +31,31 @@ module.exports = yeoman.generators.NamedBase.extend({
 
 		this.prompt(prompts, function (props) {
 			this.props = props;
-			// To access props later use this.props.someOption;
-
-			done();
+			var that = this;
+			if (props.service) {
+				this.prompt([{
+					type: 'string',
+					name: 'name',
+					message: 'What will be the name of the service?'
+				}], function(moreProps){
+					console.log(moreProps);
+					that.props.serviceName = moreProps.name;
+					done();
+				})
+			} else {
+				done();
+			}
 		}.bind(this));
 	},
 	writing: function () {
-		console.log(this.name);
 		var name = this.name || this.props.name;
 		var service = this.props.service;
+		var serviceName = this.props.serviceName;
 
 		var context = {
 			name: name,
 			service: service,
-			serviceName: name + 'svc'
+			serviceName: serviceName
 		};
 
 		var destination = 'modules/' + name + '/';
@@ -74,7 +85,8 @@ module.exports = yeoman.generators.NamedBase.extend({
 		}
 
 		if (context.service) {
-			this.composeWith('lasagnajs:service', {args: [name + 'svc'], options: {name: name + 'svc', async: true}});
+			console.log(serviceName);
+			this.composeWith('lasagnajs:service', {args: [serviceName], options: {async: true}});
 			//var route = path.resolve(__dirname, '../service/index.js');
 			//console.log(route);
 			//var serviceGenerator = require(route);

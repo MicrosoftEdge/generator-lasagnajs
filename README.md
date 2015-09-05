@@ -27,6 +27,8 @@ yo lasagnajs:module modulename
 yo lasagnajs:service servicename
 ```
 
+If you create a module you will be asked if you want a service as well. If you decide so it will do all the wiring for you.
+
 ## License
 
 MIT

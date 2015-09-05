@@ -4,12 +4,12 @@ var init = function (configurator, database, logger) {
 	var start = Date.now();
 	var db;
 
-	return database.getInstance('<%= name %>')
+	return database.getCollectionAsync('<%= name %>')
 		.then(function(instance){
 			db = instance;
-			return db.getAllDocumentsAsync();
+			return db.getDocumentsAsync();
 		})
-		.then(function(documents){
+		.tap(function(documents){
 			logger.log('Service <%= name %> loaded in ' + (Date.now - start)/1000);
 			return {
 				foo: function(){
